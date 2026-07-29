@@ -66,17 +66,15 @@ export const SalonInfo = () => {
                             {
                                 salonServices.map((service) => {
                                     return (
-                                        <div key={service.id} onClick={() => (
-                                            setSelectedServices((previous) => (
-                                                previous.includes(service.id) ? previous.filter((id) => (id !== service.id)) :
-                                                    [...previous, service.id]
+                                        <div key={service.id} onClick = {
+                                            setSelectedServices((previous)=>(
+                                                previous.includes(service.id) ? previous.filter((id)=> id !== service.id) :
+                                                [...previous, service.id]
                                             ))
-                                        )}
+                                        }
                                             className={`grid grid-cols-[2fr_1fr_1fr] w-[40vw] py-4 pl-4 border-1 rounded-xl gap-20 cursor-pointer 
                                         ${selectedServices.includes(service.id) ? "border-2 border-[#D4AF37] bg-[#FFF8E1]" : "border border-[#D4AF37]"}
-                                        `}
-
-                                        >
+                                        `}>
                                             <h3>{service.name}</h3>
                                             <p>{service.defaultDuration} mins</p>
                                             <p>Rs. {service.price}</p>
