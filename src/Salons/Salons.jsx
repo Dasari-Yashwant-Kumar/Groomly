@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot, faHeart, faCircleUser, faMagnifyingGlass, faPersonHalfDress } from "@fortawesome/free-solid-svg-icons";
 import Landing2 from "../../Assets/Landing2.png";
+import {Link} from "react-router-dom";
 
 export const Salons = () => {
     return (
@@ -28,19 +29,22 @@ export const Salons = () => {
                     </div>
                 </div>
                 {[1, 2, 3].map((item) => (
-                    <div className = "inline-flex items-center justify-center">
-                        <div key = {item} className="salonResults max-w-[20rem] m-[2rem] text-black bg-white 
+                    <div className="inline-flex items-center justify-center">
+                        <div key={item} className="salonResults max-w-[20rem] m-[2rem] text-black bg-white 
                         rounded-xl inline-flex flex-col items-start justify-center">
-                            <img src={Landing2} alt="salon" className = "rounded-t-xl"/>
+                            <img src={Landing2} alt="salon" className="rounded-t-xl" />
                             <div className="pl-[1rem] pt-[1rem]">
                                 <h1>Name of Salon</h1>
-                                <p className = "text-[0.9rem] font-thin">Shop: Beauty</p>
-                                <p className = "text-[0.9rem] font-thin">Short adddress</p>
+                                <p className="text-[0.9rem] font-thin">Shop: Beauty</p>
+                                <p className="text-[0.9rem] font-thin">Short adddress</p>
                             </div>
-                           <div className = "flex items-center justify-center w-full pt-[3rem] pb-[2rem]">
-                                 <button className = " px-[4rem] py-[0.5rem] cursor-pointer rounded-xl border-black-800 border-1 text-[0.9rem]">View Details</button>
+                            <div className="flex items-center justify-center w-full pt-[3rem] pb-[2rem]">
+                                <Link to = "/SalonInfo">
+                                <button className=" px-[4rem] py-[0.5rem] cursor-pointer rounded-xl border-black-800 border-1 text-[0.9rem]">View Details</button>
+                                </Link>
                             </div>
-                        </div>        </div>           
+                        </div>
+                    </div>
                 ))}
 
 

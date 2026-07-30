@@ -4,6 +4,7 @@ import { faPeriscope } from "@fortawesome/free-brands-svg-icons";
 import { faCircleCheck, faUser } from "@fortawesome/free-regular-svg-icons";
 import { Services } from "../assets/Services";
 import { useState } from "react";
+import {Link} from "react-router-dom";
 
 import Landing3 from "../../Assets/Landing3.png"
 
@@ -66,11 +67,13 @@ export const SalonInfo = () => {
                             {
                                 salonServices.map((service) => {
                                     return (
-                                        <div key={service.id} onClick = {
-                                            setSelectedServices((previous)=>(
+                                        <div key={service.id} onClick = {() =>{
+                                              setSelectedServices((previous)=>(
                                                 previous.includes(service.id) ? previous.filter((id)=> id !== service.id) :
                                                 [...previous, service.id]
                                             ))
+                                        }
+                                          
                                         }
                                             className={`grid grid-cols-[2fr_1fr_1fr] w-[40vw] py-4 pl-4 border-1 rounded-xl gap-20 cursor-pointer 
                                         ${selectedServices.includes(service.id) ? "border-2 border-[#D4AF37] bg-[#FFF8E1]" : "border border-[#D4AF37]"}
@@ -82,7 +85,9 @@ export const SalonInfo = () => {
                                     )
                                 })
                             }
+                            <Link to = "/Booking">
                             <button className="w-[40vw] bg-[#D4AF37] mt-[1rem] py-[1rem] rounded-xl cursor-pointer">Book Apointment</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
