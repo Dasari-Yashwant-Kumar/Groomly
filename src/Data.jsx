@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 
+
 export const userContext = createContext();
 export const Data = ({ children }) => {
 
@@ -9,6 +10,7 @@ export const Data = ({ children }) => {
     const [selectedServices, setSelectedServices] = useState([]);
     const [loading, setLoading] = useState(false);
     const [displayLocation, setDisplayLocation] = useState([])
+    const apiKey = import.meta.env.VITE_GEOAPIFY_API_KEY;
 
     const getUserLocation = () => {
         if (!navigator.geolocation) {
@@ -40,7 +42,7 @@ export const Data = ({ children }) => {
     const Salons = async () => {
         setLoading(true);
         try {
-            const salonResult = await fetch(`https://api.geoapify.com/v2/places?categories=commercial.health_and_beauty&filter=circle:${userLocation.longitude},${userLocation.latitude},10000&bias=proximity:${userLocation.longitude},${userLocation.latitude}&limit=20&apiKey=9c7230d7af554ea5b6ddb0925a15a4ee`)
+            const salonResult = await fetch(`https://api.geoapify.com/v2/places?categories=commercial.health_and_beauty&filter=circle:${userLocation.longitude},${userLocation.latitude},10000&bias=proximity:${userLocation.longitude},${userLocation.latitude}&limit=20&apiKey=${apiKey}`)
             const finalSalonResult = await salonResult.json();
             console.log(finalSalonResult)
             setSalonList(finalSalonResult.features)
@@ -54,7 +56,7 @@ export const Data = ({ children }) => {
 
     const location = async () => {
         try {
-            const location = await fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${userLocation.latitude}&lon=${userLocation.longitude}&apiKey=9c7230d7af554ea5b6ddb0925a15a4ee`);
+            const location = await fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${userLocation.latitude}&lon=${userLocation.longitude}&apiKey=${apiKey}`);
             const finalLocation = await location.json();
             console.log(finalLocation)
             setDisplayLocation(finalLocation.features[0])
