@@ -36,7 +36,7 @@ export const SalonInfo = () => {
             </div>
             <div className="flex items-center justify-start gap-5">
                 <div className="img mx-[2rem] w-[50vw]">
-                    <img src={Landing3} alt="salon" className="rounded-xl h-[60vh]" />
+                    <img src={selectedSalon.image} alt="salon" className="rounded-xl h-[60vh]" />
                     <div className="flex items-center justify-center gap-5 text-center mt-10 py-7 border border-[#D4AF37] rounded-xl">
                         <div>
                             <FontAwesomeIcon icon={faIndianRupeeSign} className = "text-[1.5rem]" />

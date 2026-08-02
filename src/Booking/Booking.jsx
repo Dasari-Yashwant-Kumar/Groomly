@@ -3,29 +3,14 @@ import { faCircleUser, faCalendar } from "@fortawesome/free-regular-svg-icons";
 import { faArrowLeftLong, faArrowRightLong } from "@fortawesome/free-solid-svg-icons"
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { Times } from "../assets/Time";
-import { useContext, useState } from "react";
+import { useContext, useState} from "react";
+import { useNavigate } from "react-router-dom";
 import { userContext } from "../Data"
-import { Services } from "../assets/Services";
+
 
 export const Booking = () => {
-
-    const salonTime = Times
-    const { selectedSalon, selectedServices } = useContext(userContext);
-    const [selectedDate, setSelectedDate] = useState(new Date());
-    const [selectedTime, setSelectedTime] = useState(null);
-    const serviceNames = Services.filter((service) => {
-        return selectedServices.includes(service.id);
-    })
-
-    const serviceTime = salonTime.find((time) => (
-        time.id === selectedTime
-    ))
-
-    const totalAmount = serviceNames.reduce((total, service) => (
-        total + service.price
-    ), 0)
-
+    const { selectedSalon, selectedServices,selectedDate, setSelectedDate, selectedTime, 
+        setSelectedTime, serviceNames, serviceTime, totalAmount, salonTime} = useContext(userContext);
     const [userDetails, setUserDetails] = useState({
         name: "",
         phone: "",
@@ -33,6 +18,8 @@ export const Booking = () => {
     })
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const navigate = useNavigate();
 
 const handleConfirmBooking = () =>{
     if(!selectedDate || selectedTime === null || !userDetails.name || !userDetails.phone || !userDetails.email){
@@ -44,7 +31,8 @@ const handleConfirmBooking = () =>{
     }if(!emailPattern.test(userDetails.email)){
         alert("enter valid email ID")
         return;
-    } }
+    } navigate("/BookingConfirmation")
+}
 
     return (
         <div className="bg-[#F7F4EF] min-h-screen font-semibold">

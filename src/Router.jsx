@@ -1,8 +1,9 @@
 import {createBrowserRouter} from "react-router-dom";
 import {Home} from "./Home/Home";
-import {Booking} from "./Salons/Booking";
+import {Booking} from "./Booking/Booking";
 import {SalonInfo} from "./Salons/SalonInfo";
 import {Salons} from "./Salons/Salons"
+import { BookingConfirmation } from "./Booking/BookingConfirmation";
 
 export const Router = createBrowserRouter([
     {
@@ -20,5 +21,10 @@ export const Router = createBrowserRouter([
     {
         path: "/Booking",
         element: <Booking/>
+    },
+    {
+        path: "/BookingConfirmation",
+        element: <BookingConfirmation/>
     }
+
 ])

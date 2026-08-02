@@ -41,6 +41,7 @@ export const Salons = () => {
                         <input type="text" className="py-4 outline-none w-full" value={filteredSalons} onChange={(e) => (setFilteredSalons(e.target.value))} />
                     </div>
                 </div>
+                <div className = "grid grid-cols-3 justify-items-center gap-8">
                 {searchedSalon.map((item, index) => (
                     <div key={index} className="inline-flex items-center justify-center">
                         <div className="salonResults w-[20rem] m-[2rem] text-black bg-white 
@@ -54,14 +55,13 @@ export const Salons = () => {
                             <div className="flex items-center justify-center w-full pt-[3rem] pb-[2rem]">
                                 <Link to="/SalonInfo">
                                     <button className=" px-[4rem] py-[0.5rem] cursor-pointer rounded-xl 
-                                border-black-800 border-1 text-[0.9rem]" onClick={() => setSelectedSalon(item)}>View Details</button>
+                                border-black-800 border-1 text-[0.9rem]" onClick={() => setSelectedSalon({...item, image: SalonImg [index % SalonImg.length]})}>View Details</button>
                                 </Link>
                             </div>
                         </div>
                     </div>
                 ))}
-
-
+                </div>
             </div>
         </div>
 

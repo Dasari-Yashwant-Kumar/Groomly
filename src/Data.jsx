@@ -1,4 +1,6 @@
 import { createContext, useState, useEffect } from "react";
+import { Services } from "./assets/Services";
+import { Times } from "./assets/Time";
 
 
 export const userContext = createContext();
@@ -11,6 +13,21 @@ export const Data = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [displayLocation, setDisplayLocation] = useState([])
     const apiKey = import.meta.env.VITE_GEOAPIFY_API_KEY;
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedTime, setSelectedTime] = useState(null);
+    const salonTime = Times
+
+    const serviceNames = Services.filter((service) => {
+        return selectedServices.includes(service.id);
+    })
+
+    const serviceTime = salonTime.find((time) => (
+        time.id === selectedTime
+    ))
+
+    const totalAmount = serviceNames.reduce((total, service) => (
+        total + service.price
+    ), 0)
 
     const getUserLocation = () => {
         if (!navigator.geolocation) {
@@ -67,7 +84,8 @@ export const Data = ({ children }) => {
     return (
         <userContext.Provider value={{
             userLocation, setUserLocation, getUserLocation, salonList, setSalonList,
-            selectedSalon, setSelectedSalon, selectedServices, setSelectedServices, loading, displayLocation
+            selectedSalon, setSelectedSalon, selectedServices, setSelectedServices, loading, displayLocation,
+            selectedDate, setSelectedDate, selectedTime, setSelectedTime, serviceNames, serviceTime, totalAmount, salonTime
         }}>
             {children}
         </userContext.Provider>
