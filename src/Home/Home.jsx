@@ -2,62 +2,35 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot, faHeart, faCircleUser, faMagnifyingGlass, faPersonHalfDress } from "@fortawesome/free-solid-svg-icons";
 import Landing from "../../Assets/Landing.png";
 import { useState, useEffect } from "react";
-import {Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { userContext } from "../Data";
+import { SalonShimmer } from "../Salons/SalonShimmer"
 
 export const Home = () => {
+    const { userLocation, setUserLocation, getUserLocation, displayLocation } = useContext(userContext);
+    const navigate = useNavigate();
 
-    const [userLocation, setUserLocation] = useState(null)
-
-    const getUserLocation = () => {
-        if (!navigator.geolocation) {
-            alert(`Browser doesn't allow to access user location`);
-            return;
+    const handleExploreSalon = () => {
+        if (userLocation) {
+            navigate("/Salons")
+        } else {
+            alert("Please use your location before continuing.. ")
         }
-
-        navigator.geolocation.getCurrentPosition((position) => {
-            setUserLocation(
-                {
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                }
-            )
-        }),
-            (error) => console.log(error.message)
     }
-
-    useEffect(() => {
-        if(userLocation){
-            salons()
-        }
-    }, [userLocation])
-
-    const salons = async () => {
-        const salon = await fetch(`https://api.geoapify.com/v2/places?categories=commercial.health_and_beauty&filter=circle:${userLocation.longitude},${userLocation.latitude},10000&bias=proximity:${userLocation.longitude},${userLocation.latitude}&limit=20&apiKey=9c7230d7af554ea5b6ddb0925a15a4ee`)
-        const salonResults = await salon.json()
-        console.log(salonResults)
-    }
-
-
     return (
-        <div style={{ backgroundImage: `url(${Landing})` }} className="min-h-screen bg-cover bg-center pl-[5rem] w-screen font-semibold">
-            <div className="navbar flex items-center justify-Start pt-[2rem] gap-[10rem] text-[#FFFFFF] w-full">
-                <div className="logo text-[1.5rem]">
-                    <h1>Groomly</h1>
-                </div>
-                <div className="information flex items-center justify-evenly cursor-pointer w-full">
-                    <h2>Discover</h2>
-                    <h2>Serives</h2>
-                    <h2>About Us</h2>
-                    <h2>Contact</h2>
-                </div>
-                <div className="profile flex items-center justify-evenly w-full">
-                    <div className="location flex items-center justify-center gap-2">
-                        <FontAwesomeIcon icon={faLocationDot} />
-                        <h2>Name of location</h2>
+        <div style={{ backgroundImage: `url(${Landing})` }} className="min-h-screen bg-cover bg-center px-[5rem] w-screen font-semibold">
+            <div className="navbar pt-[2rem] text-[#FFFFFF] w-full">
+                <div className="logo flex items-center justify-between w-full">
+                    <h1 className="text-[1.5rem]">Groomly</h1>
+                    <div className="information flex items-center justify-center gap-10 cursor-pointer">
+                        <h2>Discover</h2>
+                        <h2>Services</h2>
+                        <h2>About Us</h2>
+                        <h2>Contact</h2>
                     </div>
-                    <FontAwesomeIcon icon={faHeart} className="text-[1.2rem] cursor-pointer" />
-                    <FontAwesomeIcon icon={faCircleUser} className="text-[1.2rem] cursor-pointer" />
                 </div>
+
             </div>
             <div className="body pt-[5rem]">
                 <div className="flex flex-col gap-7">
@@ -70,21 +43,12 @@ export const Home = () => {
                 </div>
                 <div className="pt-[2rem] flex items-center">
                     <button className="py-[1rem] px-[3rem] bg-white rounded-xl text-center cursor-pointer" onClick={getUserLocation}> <FontAwesomeIcon icon={faLocationDot} /> Use my location</button>
-                    <div className="inline-flex items-center justify-start gap-3 bg-white rounded-xl pl-[2rem] pr-[7rem]">
-                        <FontAwesomeIcon icon={faMagnifyingGlass} />
 
-                        <input
-                            placeholder="Search for salons, spas..."
-                            className=" py-4 outline-none"
-                        />
-                    </div>
-                    <Link to= "/Salons">
-                    <button className="py-[1rem] px-[3rem] bg-[#D4AF37] rounded-xl text-center cursor-pointer">Search</button></Link>
+                    <button className="py-[1rem] px-[3rem] bg-[#D4AF37] rounded-xl text-center cursor-pointer" onClick={handleExploreSalon}>Search</button>
                 </div>
             </div>
             <div className="footer mt-[3rem] mr-[2rem] py-[1.5rem] border-yellow-200 border-1 bg-black rounded-xl text-white flex items-center justify-evenly">
                 <div>
-                    {/* <FontAwesomeIcon icon={faPersonHalfDress} /> */}
                     <h1>All Gender Friendly</h1>
                     <p className="text-xs font-thin">Everyone is welcome</p>
                 </div>

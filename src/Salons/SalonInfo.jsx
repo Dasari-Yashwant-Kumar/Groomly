@@ -3,14 +3,25 @@ import { faAngleLeft, faShareNodes, faHeart, faLocationDot, faCircle, faIndianRu
 import { faPeriscope } from "@fortawesome/free-brands-svg-icons";
 import { faCircleCheck, faUser } from "@fortawesome/free-regular-svg-icons";
 import { Services } from "../assets/Services";
-import { useState } from "react";
-import {Link} from "react-router-dom";
-
+import { useState, useContext } from "react";
+import {useNavigate} from "react-router-dom";
+import {userContext} from "../Data";
 import Landing3 from "../../Assets/Landing3.png"
 
 export const SalonInfo = () => {
     const salonServices = Services;
-    const [selectedServices, setSelectedServices] = useState([]);
+    const {selectedSalon, selectedServices, setSelectedServices} = useContext(userContext);
+
+    const navigateBooking = useNavigate();
+
+    const handleBooking = () =>{
+        if(selectedServices.length > 0){
+            navigateBooking("/Booking")
+        } else{
+            alert("Select any services before moving forward.")
+        }
+    }
+
     return (
         <div className="bg-[#F7F4EF] min-h-screen font-semibold">
             <div className="profileBar flex items-center justify-between mx-[2rem] pt-[2rem]">
@@ -48,14 +59,14 @@ export const SalonInfo = () => {
                     </div>
                 </div>
                 <div className="flex flex-col items-start justify-center mt-[1rem]">
-                    <h1 className="text-[2rem]">Name of the salon</h1>
+                    <h1 className="text-[2rem]">{selectedSalon.properties.address_line1}</h1>
                     <div className="flex flex-col gap-4 items-start justify-center">
                         <div className="flex items-center justify-center gap-5">
                             <p>Beauty</p>
                             <FontAwesomeIcon icon={faCircle} className="text-[0.5rem]" />
                             <p>Spa</p>
                         </div>
-                        <p><FontAwesomeIcon icon={faLocationDot} /> Location</p>
+                        <p><FontAwesomeIcon icon={faLocationDot} /> {selectedSalon.properties.address_line2}</p>
                         <div className="flex items-center justify-center gap-5">
                             <FontAwesomeIcon icon={faPeriscope} />
                             <p>Open  </p>
@@ -85,9 +96,9 @@ export const SalonInfo = () => {
                                     )
                                 })
                             }
-                            <Link to = "/Booking">
-                            <button className="w-[40vw] bg-[#D4AF37] mt-[1rem] py-[1rem] rounded-xl cursor-pointer">Book Apointment</button>
-                            </Link>
+                           
+                            <button className="w-[40vw] bg-[#D4AF37] mt-[1rem] py-[1rem] rounded-xl cursor-pointer" onClick = {handleBooking}>Book Apointment</button>
+                            
                         </div>
                     </div>
                 </div>
